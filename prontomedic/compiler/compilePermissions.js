@@ -1,0 +1,42 @@
+const path = require('path');
+const fs = require('fs');
+const solc = require('solc');
+
+const permissionsPath = path.resolve(__dirname, '../contracts', 'Permissions.sol');
+const source = fs.readFileSync(permissionsPath, 'utf8');
+
+const jsonFolderPath = path.resolve(__dirname, '../abis');
+const jsonFilePath = path.resolve(__dirname, '../abis', 'Permissions.json');
+
+const input = {
+  language: 'Solidity',
+  sources: {
+    'Permissions.sol': {
+      content: source,
+    },
+  },
+  settings: {
+    outputSelection: {
+      '*': {
+        '*': ['*'],
+      },
+    },
+  },
+};
+
+const compiler = JSON.parse(solc.compile(JSON.stringify(input))).contracts[
+  'Permissions.sol'
+].Permissions;
+
+const compiled = {
+  abi: compiler.abi,
+  bytecode: compiler.evm.bytecode.object
+}
+
+const json = JSON.stringify(compiled);
+if (!fs.existsSync(jsonFolderPath)){
+  fs.mkdirSync(jsonFolderPath);
+}
+fs.writeFile(jsonFilePath, json, 'utf8', (err) => {});
+
+module.exports = compiler;
