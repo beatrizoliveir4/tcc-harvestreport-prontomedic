@@ -5,7 +5,7 @@ describe('HarvestReport', () => {
         assert(harvestreportAddress);
     });
 
-    it('recupera lista de pacientes', async () => {
+    it('recupera lista de colheitas', async () => {
         const harvestsDeployed = await harvestreport.methods.getDeployedHarvests().call({ from: accounts[0] });
         assert(harvestsDeployed);
     });

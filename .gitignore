@@ -1,7 +1,12 @@
 .DS_Store
+.gitignore
 
 prontomedic/node_modules
 prontomedic/abis
+prontomedic/package-lock.json
+prontomedic/basic_config.json
 
 harvestreport/node_modules
 harvestreport/abis
+harvestreport/package-lock.json
+harvestreport/basic_config.json
